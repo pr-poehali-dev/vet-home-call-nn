@@ -132,6 +132,30 @@ export default function Index() {
     { name: 'Московский район', time: '40-60 мин', color: 'bg-orange-400' }
   ];
 
+  const doctors = [
+    {
+      name: 'Елена Михайловна Соколова',
+      specialization: 'Главный ветеринар, терапевт',
+      experience: '15 лет опыта',
+      description: 'Специализируется на комплексной диагностике и лечении домашних животных. Эксперт по внутренним болезням кошек и собак.',
+      image: '/img/bf07cebe-5bbd-4978-8918-41e033828f0d.jpg'
+    },
+    {
+      name: 'Александр Петрович Волков',
+      specialization: 'Хирург-ортопед',
+      experience: '20 лет опыта',
+      description: 'Проводит сложные хирургические операции, специалист по травматологии и ортопедии. Опыт работы с экзотическими животными.',
+      image: '/img/a0306b70-5843-42ea-92ab-671d0caf3ca1.jpg'
+    },
+    {
+      name: 'Мария Сергеевна Лебедева',
+      specialization: 'Терапевт, дерматолог',
+      experience: '8 лет опыта',
+      description: 'Эксперт по кожным заболеваниям и аллергиям у животных. Специализируется на работе с грызунами и кроликами.',
+      image: '/img/dbf00f78-6e44-4997-ba57-248f8b058533.jpg'
+    }
+  ];
+
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50 to-white">
       {/* Header */}
@@ -407,8 +431,55 @@ export default function Index() {
         </div>
       </section>
 
+      {/* Doctors */}
+      <section className="py-16 bg-gray-50">
+        <div className="container mx-auto px-4">
+          <div 
+            id="doctors-title" 
+            data-animate 
+            className={`transition-all duration-700 ${getAnimationClass('doctors-title', 'animate-fade-in-up')}`}
+          >
+            <h3 className="text-3xl font-montserrat font-bold text-center text-secondary mb-4">
+              Наши врачи
+            </h3>
+            <p className="text-center text-gray-600 font-open-sans mb-12 max-w-2xl mx-auto">
+              Опытные специалисты с любовью к животным и профессиональным подходом к лечению
+            </p>
+          </div>
+          
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {doctors.map((doctor, index) => (
+              <Card 
+                key={index} 
+                id={`doctor-${index}`}
+                data-animate
+                className={`bg-white transition-all duration-700 delay-${index * 150} hover:shadow-xl hover:-translate-y-2 ${getAnimationClass(`doctor-${index}`, 'animate-scale-in')}`}
+              >
+                <div className="relative overflow-hidden h-64">
+                  <img 
+                    src={doctor.image} 
+                    alt={doctor.name}
+                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
+                </div>
+                <CardContent className="p-6">
+                  <h4 className="text-xl font-montserrat font-bold text-secondary mb-2">{doctor.name}</h4>
+                  <Badge variant="secondary" className="mb-3">{doctor.specialization}</Badge>
+                  <div className="flex items-center text-primary font-semibold text-sm mb-3">
+                    <Icon name="Award" size={16} className="mr-1" />
+                    {doctor.experience}
+                  </div>
+                  <p className="text-gray-600 font-open-sans text-sm">{doctor.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Reviews */}
-      <section className="py-16 bg-orange-50">
+      <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
           <div 
             id="reviews-title" 
