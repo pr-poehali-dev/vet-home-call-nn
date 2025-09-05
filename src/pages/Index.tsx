@@ -16,6 +16,7 @@ export default function Index() {
     description: ''
   });
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isExitPopupOpen, setIsExitPopupOpen] = useState(false);
   const [visibleElements, setVisibleElements] = useState<Set<string>>(new Set());
   const observerRef = useRef<IntersectionObserver | null>(null);
 
@@ -45,10 +46,19 @@ export default function Index() {
       }
     });
 
+    const handleMouseLeave = (e: MouseEvent) => {
+      if (e.clientY <= 0) {
+        setIsExitPopupOpen(true);
+      }
+    };
+
+    document.addEventListener('mouseleave', handleMouseLeave);
+
     return () => {
       if (observerRef.current) {
         observerRef.current.disconnect();
       }
+      document.removeEventListener('mouseleave', handleMouseLeave);
     };
   }, []);
 
@@ -478,6 +488,83 @@ export default function Index() {
         </div>
       </section>
 
+      {/* Before/After Success Stories */}
+      <section className="py-16 bg-gradient-to-br from-blue-50 to-purple-50">
+        <div className="container mx-auto px-4">
+          <div 
+            id="success-title" 
+            data-animate 
+            className={`transition-all duration-700 ${getAnimationClass('success-title', 'animate-fade-in-up')}`}
+          >
+            <h3 className="text-3xl font-montserrat font-bold text-center text-secondary mb-4">
+              Истории выздоровления
+            </h3>
+            <p className="text-center text-gray-600 font-open-sans mb-12 max-w-2xl mx-auto">
+              Реальные результаты нашей работы - до и после лечения
+            </p>
+          </div>
+          
+          <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {[
+              {
+                title: "Спасение Мурзика",
+                description: "Тяжелое отравление превратилось в полное выздоровление за 5 дней",
+                image: "/img/d406ab69-2638-499a-992c-46baccefa37f.jpg",
+                duration: "5 дней лечения"
+              },
+              {
+                title: "Операция Рекса", 
+                description: "Сложный перелом лапы - успешная операция и полная реабилитация",
+                image: "/img/f8094e65-4045-4516-a760-5941a040ed18.jpg",
+                duration: "2 недели восстановления"
+              },
+              {
+                title: "Лечение кролика Пушка",
+                description: "Проблемы с пищеварением решены комплексной терапией",
+                image: "/img/11d9e6f2-055a-493f-8cdb-edfa46aee1d9.jpg", 
+                duration: "10 дней лечения"
+              }
+            ].map((story, index) => (
+              <Card 
+                key={index}
+                id={`success-${index}`}
+                data-animate
+                className={`transition-all duration-700 delay-${index * 200} hover:shadow-xl hover:-translate-y-2 overflow-hidden ${getAnimationClass(`success-${index}`, 'animate-scale-in')}`}
+              >
+                <div className="relative h-48 overflow-hidden">
+                  <img 
+                    src={story.image} 
+                    alt={story.title}
+                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute top-4 right-4">
+                    <Badge className="bg-green-500 text-white">
+                      <Icon name="Check" size={12} className="mr-1" />
+                      Успех
+                    </Badge>
+                  </div>
+                </div>
+                <CardContent className="p-6">
+                  <h4 className="text-lg font-montserrat font-bold text-secondary mb-2">{story.title}</h4>
+                  <p className="text-gray-600 font-open-sans text-sm mb-4">{story.description}</p>
+                  <div className="flex items-center text-primary">
+                    <Icon name="Clock" size={16} className="mr-2" />
+                    <span className="text-sm font-semibold">{story.duration}</span>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+          
+          <div className="text-center mt-12">
+            <div className="inline-flex items-center bg-green-100 rounded-full px-6 py-3 mb-4">
+              <Icon name="TrendingUp" size={20} className="text-green-600 mr-2" />
+              <span className="text-green-700 font-semibold">95% успешных случаев</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Reviews */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
@@ -486,9 +573,12 @@ export default function Index() {
             data-animate 
             className={`transition-all duration-700 ${getAnimationClass('reviews-title', 'animate-fade-in-up')}`}
           >
-            <h3 className="text-3xl font-montserrat font-bold text-center text-secondary mb-12">
-              Отзывы клиентов
+            <h3 className="text-3xl font-montserrat font-bold text-center text-secondary mb-4">
+              Отзывы наших клиентов
             </h3>
+            <p className="text-center text-gray-600 font-open-sans mb-12 max-w-2xl mx-auto">
+              Более 2000 счастливых питомцев и их владельцев доверяют нам здоровье своих любимцев
+            </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {reviews.map((review, index) => (
@@ -513,11 +603,32 @@ export default function Index() {
               </Card>
             ))}
           </div>
+          
+          <div className="text-center mt-12">
+            <div className="inline-flex items-center bg-primary/10 rounded-full px-6 py-3 mb-6">
+              <Icon name="Users" size={20} className="text-primary mr-2" />
+              <span className="text-primary font-semibold">Более 2000 довольных клиентов</span>
+            </div>
+            <div className="flex justify-center space-x-8 text-center">
+              <div>
+                <div className="text-2xl font-montserrat font-bold text-primary">4.9</div>
+                <div className="text-sm text-gray-600">Рейтинг</div>
+              </div>
+              <div>
+                <div className="text-2xl font-montserrat font-bold text-primary">500+</div>
+                <div className="text-sm text-gray-600">Отзывов</div>
+              </div>
+              <div>
+                <div className="text-2xl font-montserrat font-bold text-primary">24/7</div>
+                <div className="text-sm text-gray-600">Поддержка</div>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div 
             id="faq-title" 
@@ -610,8 +721,77 @@ export default function Index() {
               Вызов
             </Button>
           </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Вызов ветеринара на дом</DialogTitle>
+            </DialogHeader>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <Input 
+                placeholder="Ваше имя" 
+                value={formData.name} 
+                onChange={(e) => setFormData({...formData, name: e.target.value})}
+                required 
+              />
+              <Input 
+                placeholder="Номер телефона" 
+                value={formData.phone} 
+                onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                required 
+              />
+              <Input 
+                placeholder="Адрес" 
+                value={formData.address} 
+                onChange={(e) => setFormData({...formData, address: e.target.value})}
+                required 
+              />
+              <Textarea 
+                placeholder="Опишите состояние питомца"
+                value={formData.description}
+                onChange={(e) => setFormData({...formData, description: e.target.value})}
+              />
+              <Button type="submit" className="w-full">Вызвать врача</Button>
+            </form>
+          </DialogContent>
         </Dialog>
       </div>
+
+      {/* Exit Intent Popup */}
+      <Dialog open={isExitPopupOpen} onOpenChange={setIsExitPopupOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-center">Не уходите! 🎉</DialogTitle>
+          </DialogHeader>
+          <div className="text-center space-y-4">
+            <div className="text-4xl">🐾</div>
+            <h3 className="text-xl font-bold text-primary">Специальное предложение!</h3>
+            <p className="text-gray-600">Первый осмотр на дому со скидкой <span className="text-2xl font-bold text-red-500">30%</span></p>
+            <div className="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-400">
+              <p className="text-sm text-gray-700">
+                <strong>Только сегодня:</strong> Комплексный осмотр + консультация всего за 1400₽ вместо 2000₽
+              </p>
+            </div>
+            <div className="space-y-2">
+              <Button 
+                className="w-full" 
+                onClick={() => {
+                  setIsExitPopupOpen(false);
+                  setIsDialogOpen(true);
+                }}
+              >
+                <Icon name="Phone" size={16} className="mr-2" />
+                Получить скидку
+              </Button>
+              <Button 
+                variant="outline" 
+                className="w-full" 
+                onClick={() => setIsExitPopupOpen(false)}
+              >
+                Может быть, позже
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }
