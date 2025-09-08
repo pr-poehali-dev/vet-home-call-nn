@@ -7,6 +7,7 @@ import { Badge } from '@/components/ui/badge';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import Icon from '@/components/ui/icon';
+import ChatBot from '@/components/ChatBot';
 
 export default function Index() {
   const [formData, setFormData] = useState({
@@ -565,6 +566,106 @@ export default function Index() {
         </div>
       </section>
 
+      {/* Urgency Block with Limited Offer */}
+      <section className="py-12 bg-gradient-to-r from-red-600 to-orange-600 text-white relative overflow-hidden">
+        <div className="absolute inset-0 bg-black opacity-10"></div>
+        <div className="container mx-auto px-4 relative z-10">
+          <div className="text-center">
+            <div className="inline-flex items-center bg-yellow-400 text-red-800 rounded-full px-4 py-2 mb-4 font-bold text-sm animate-pulse">
+              <Icon name="AlertTriangle" size={16} className="mr-2" />
+              СРОЧНОЕ ПРЕДЛОЖЕНИЕ
+            </div>
+            <h3 className="text-3xl font-montserrat font-bold mb-4">
+              Только сегодня! Скидка 50% на первый визит
+            </h3>
+            <p className="text-xl mb-6 opacity-90">
+              Осталось мест: <span className="font-bold text-yellow-300">3 из 10</span>
+            </p>
+            
+            {/* Countdown Timer */}
+            <div className="bg-black bg-opacity-30 rounded-lg p-6 mb-6 max-w-md mx-auto">
+              <p className="text-sm mb-2 opacity-80">До окончания акции:</p>
+              <div className="flex justify-center space-x-4 text-2xl font-bold">
+                <div className="text-center">
+                  <div className="bg-white text-red-600 rounded px-3 py-2 min-w-[60px]">23</div>
+                  <div className="text-xs mt-1">часа</div>
+                </div>
+                <div className="text-center">
+                  <div className="bg-white text-red-600 rounded px-3 py-2 min-w-[60px]">59</div>
+                  <div className="text-xs mt-1">мин</div>
+                </div>
+                <div className="text-center">
+                  <div className="bg-white text-red-600 rounded px-3 py-2 min-w-[60px]">45</div>
+                  <div className="text-xs mt-1">сек</div>
+                </div>
+              </div>
+            </div>
+            
+            <Button 
+              size="lg" 
+              className="bg-yellow-400 text-red-800 hover:bg-yellow-300 text-lg font-bold px-8 py-4 rounded-full animate-bounce"
+              onClick={() => setIsFormOpen(true)}
+            >
+              <Icon name="Zap" size={20} className="mr-2" />
+              ЗАПИСАТЬСЯ СО СКИДКОЙ 50%
+            </Button>
+            
+            <p className="text-sm mt-4 opacity-80">
+              *Акция действует только при записи через сайт
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Money Back Guarantee */}
+      <section className="py-12 bg-green-50">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="text-center mb-8">
+              <div className="w-20 h-20 bg-green-500 rounded-full flex items-center justify-center mx-auto mb-4">
+                <Icon name="Shield" size={40} className="text-white" />
+              </div>
+              <h3 className="text-2xl font-montserrat font-bold text-secondary mb-4">
+                Гарантия возврата денег 100%
+              </h3>
+              <p className="text-gray-600 max-w-2xl mx-auto">
+                Мы так уверены в качестве нашей работы, что предоставляем полную гарантию возврата средств
+              </p>
+            </div>
+            
+            <div className="grid md:grid-cols-3 gap-6">
+              {[
+                {
+                  icon: "Calendar",
+                  title: "30 дней на возврат",
+                  description: "Если результат вас не устроит - вернем деньги полностью"
+                },
+                {
+                  icon: "FileText",
+                  title: "Без лишних вопросов", 
+                  description: "Простая процедура возврата без сложных условий"
+                },
+                {
+                  icon: "Banknote",
+                  title: "100% компенсация",
+                  description: "Возвращаем полную стоимость лечения на карту"
+                }
+              ].map((guarantee, index) => (
+                <Card key={index} className="text-center border-green-200 hover:shadow-lg transition-all duration-300">
+                  <CardContent className="p-6">
+                    <div className="w-12 h-12 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                      <Icon name={guarantee.icon as any} size={24} className="text-green-600" />
+                    </div>
+                    <h4 className="font-montserrat font-bold text-secondary mb-2">{guarantee.title}</h4>
+                    <p className="text-sm text-gray-600">{guarantee.description}</p>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* Reviews */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
@@ -581,24 +682,65 @@ export default function Index() {
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {reviews.map((review, index) => (
+            {[
+              {
+                name: "Анна Петрова",
+                text: "Спасибо огромное! Мурзик был очень болен, но врачи поставили его на ноги за несколько дней. Профессионализм на высшем уровне!",
+                rating: 5,
+                date: "2 дня назад",
+                photo: "/img/2766dfa5-0de8-407e-b886-56847eed852d.jpg",
+                petName: "Мурзик (кот)"
+              },
+              {
+                name: "Дмитрий Смирнов", 
+                text: "Рекс попал под машину, думали все кончено. Но здесь творят чудеса! Операция прошла отлично, собака снова бегает как ни в чем не бывало.",
+                rating: 5,
+                date: "5 дней назад",
+                photo: "/img/f508f102-8ae4-4e3d-8d7a-9777ee6b7d9d.jpg",
+                petName: "Рекс (собака)"
+              },
+              {
+                name: "Семья Ивановых",
+                text: "Привели Белку с проблемами пищеварения. Врач очень внимательно осмотрел, назначил лечение. Через неделю питомец здоров!",
+                rating: 5, 
+                date: "1 неделю назад",
+                photo: "/img/5c44ef27-fb2b-46ce-9e5d-021bd49799fd.jpg",
+                petName: "Белка (собака)"
+              }
+            ].map((review, index) => (
               <Card 
                 key={index} 
                 id={`review-${index}`}
                 data-animate
-                className={`bg-white transition-all duration-700 delay-${index * 200} hover:shadow-lg hover:scale-105 ${getAnimationClass(`review-${index}`, 'animate-fade-in-up')}`}
+                className={`bg-white transition-all duration-700 delay-${index * 200} hover:shadow-lg hover:scale-105 border-2 border-transparent hover:border-primary ${getAnimationClass(`review-${index}`, 'animate-fade-in-up')}`}
               >
                 <CardContent className="p-6">
-                  <div className="flex items-center mb-4">
-                    <div className="flex space-x-1">
-                      {[...Array(review.rating)].map((_, i) => (
-                        <Icon key={i} name="Star" size={16} className="text-yellow-400 fill-current" />
-                      ))}
+                  {/* Photo Section */}
+                  <div className="mb-4">
+                    <img 
+                      src={review.photo} 
+                      alt={`${review.name} с ${review.petName}`}
+                      className="w-full h-48 object-cover rounded-lg mb-3"
+                    />
+                    <div className="flex items-center justify-between">
+                      <div className="flex space-x-1">
+                        {[...Array(review.rating)].map((_, i) => (
+                          <Icon key={i} name="Star" size={16} className="text-yellow-400 fill-current" />
+                        ))}
+                      </div>
+                      <span className="text-sm text-gray-500">{review.date}</span>
                     </div>
-                    <span className="ml-2 text-sm text-gray-500">{review.date}</span>
                   </div>
                   <p className="text-gray-700 mb-4 font-open-sans">"{review.text}"</p>
-                  <div className="font-semibold text-secondary">{review.name}</div>
+                  <div className="flex items-center">
+                    <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
+                      {review.name.split(' ').map((n: string) => n[0]).join('')}
+                    </div>
+                    <div>
+                      <p className="font-montserrat font-semibold text-secondary">{review.name}</p>
+                      <p className="text-xs text-gray-500">Владелец: {review.petName}</p>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             ))}
@@ -792,6 +934,9 @@ export default function Index() {
           </div>
         </DialogContent>
       </Dialog>
+      
+      {/* Chat Bot */}
+      <ChatBot />
     </div>
   );
 }
