@@ -3,17 +3,32 @@
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Поехали!</title>
-    <meta name="description" content="Poehali.dev — запусти свой сайт за минуту!"/>
-    <meta name="author" content="poehali.dev"/>
+    <title>ВетДом НН - Ветеринар на дом</title>
+    <meta name="description" content="Профессиональная ветеринарная помощь на дому в Нижнем Новгороде. Круглосуточно, опытные врачи, доступные цены."/>
+    <meta name="author" content="ВетДом НН"/>
     <link rel="icon" type="image/svg+xml" href="/favicon.svg">
-    <meta property="og:title" content="Поехали!">
-    <meta property="og:description" content="Ваш личный программист, который делает сайты в 30 раз быстрее обычного.">
-    <meta property="og:image:width" content="4800">
-    <meta property="og:image:height" content="2520">
-    <meta property="og:image:alt" content="Поехали! — сервис разработки сайтов с помощью ИИ">
-    <meta property="og:image" content="https://cdn.poehali.dev/intertnal/img/og.png">
-    <meta name="twitter:image" content="https://cdn.poehali.dev/intertnal/img/og.png">
+    
+    <!-- PWA Meta Tags -->
+    <meta name="theme-color" content="#f97316" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <meta name="apple-mobile-web-app-title" content="ВетДом НН" />
+    <meta name="msapplication-TileColor" content="#f97316" />
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="/manifest.json" />
+    
+    <meta property="og:title" content="ВетДом НН - Ветеринар на дом">
+    <meta property="og:description" content="Профессиональная ветеринарная помощь на дому в Нижнем Новгороде. Круглосуточно, опытные врачи, доступные цены.">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:image:alt" content="ВетДом НН — ветеринарная помощь на дому">
+    <meta property="og:image" content="/img/2766dfa5-0de8-407e-b886-56847eed852d.jpg">
+    <meta name="twitter:image" content="/img/2766dfa5-0de8-407e-b886-56847eed852d.jpg">
+    
+    <!-- Preconnect для оптимизации -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
 
     <!-- IMPORTANT: DO NOT REMOVE THIS SCRIPT TAG OR THIS COMMENT! -->
 
@@ -29,6 +44,21 @@
 <body>
 <div id="root"></div>
 <script type="module" src="/src/main.tsx"></script>
+
+<!-- Service Worker Registration -->
+<script>
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('/sw.js')
+      .then((registration) => {
+        console.log('SW registered: ', registration);
+      })
+      .catch((registrationError) => {
+        console.log('SW registration failed: ', registrationError);
+      });
+  });
+}
+</script></script>
 
 <!-- Yandex.Metrika counter -->
 <script type="text/javascript">

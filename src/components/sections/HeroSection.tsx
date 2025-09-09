@@ -31,50 +31,55 @@ const HeroSection = memo(({
   return (
     <>
       {/* Header */}
-      <header className="bg-white shadow-sm sticky top-0 z-50">
-        <div className="container mx-auto px-4 py-4 flex justify-between items-center">
+      <header className="bg-white shadow-sm sticky top-0 z-50" role="banner">
+        <nav className="container mx-auto px-4 py-4 flex justify-between items-center" aria-label="Главная навигация">
           <div className="flex items-center space-x-2">
-            <Icon name="Heart" className="text-primary animate-pulse-soft" size={32} />
+            <Icon name="Heart" className="text-primary animate-pulse-soft" size={32} aria-hidden="true" />
             <h1 className="text-2xl font-montserrat font-bold text-secondary">ВетДом НН</h1>
           </div>
           <div className="hidden md:flex items-center space-x-6">
-            <span className="text-secondary font-open-sans">Нижний Новгород</span>
-            <a href="tel:+78312234567" className="text-primary font-semibold hover:scale-105 transition-transform">
+            <span className="text-secondary font-open-sans" aria-label="Город обслуживания">Нижний Новгород</span>
+            <a 
+              href="tel:+78312234567" 
+              className="text-primary font-semibold hover:scale-105 transition-transform focus:outline-none focus:ring-2 focus:ring-primary focus:ring-opacity-50 rounded"
+              aria-label="Позвонить по номеру +7 (831) 223-45-67"
+            >
               +7 (831) 223-45-67
             </a>
           </div>
-        </div>
+        </nav>
       </header>
 
       {/* Hero Section */}
-      <section className="relative py-20 bg-gradient-to-r from-primary/10 to-orange-100">
-        <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
-          <div 
-            id="hero-text" 
-            data-animate 
-            className={`transition-all duration-700 ${getAnimationClass('hero-text', 'animate-fade-in-left')}`}
-          >
-            <h2 className="text-4xl md:text-5xl font-montserrat font-bold text-secondary mb-6 leading-tight">
-              Ветеринарная помощь 
-              <span className="text-primary"> на дому</span>
-            </h2>
-            <p className="text-lg text-gray-600 mb-8 font-open-sans">
-              Профессиональная медицинская помощь вашим питомцам в комфортной домашней обстановке. 
-              Опытные врачи, современное оборудование, доступные цены.
-            </p>
+      <main>
+        <section className="relative py-20 bg-gradient-to-r from-primary/10 to-orange-100" aria-labelledby="hero-heading">
+          <div className="container mx-auto px-4 grid md:grid-cols-2 gap-12 items-center">
+            <div 
+              id="hero-text" 
+              data-animate 
+              className={`transition-all duration-700 ${getAnimationClass('hero-text', 'animate-fade-in-left')}`}
+            >
+              <h2 id="hero-heading" className="text-4xl md:text-5xl font-montserrat font-bold text-secondary mb-6 leading-tight">
+                Ветеринарная помощь 
+                <span className="text-primary"> на дому</span>
+              </h2>
+              <p className="text-lg text-gray-600 mb-8 font-open-sans">
+                Профессиональная медицинская помощь вашим питомцам в комфортной домашней обстановке. 
+                Опытные врачи, современное оборудование, доступные цены.
+              </p>
             
-            <div className="flex flex-wrap gap-4 mb-8">
-              <Badge variant="secondary" className="px-4 py-2 text-sm hover:scale-105 transition-transform">
-                <Icon name="Clock" size={16} className="mr-2" />
-                Выезд за 1 час
+            <div className="flex flex-wrap gap-4 mb-8" role="list" aria-label="Преимущества сервиса">
+              <Badge variant="secondary" className="px-4 py-2 text-sm hover:scale-105 transition-transform" role="listitem">
+                <Icon name="Clock" size={16} className="mr-2" aria-hidden="true" />
+                <span>Выезд за 1 час</span>
               </Badge>
-              <Badge variant="secondary" className="px-4 py-2 text-sm hover:scale-105 transition-transform">
-                <Icon name="Shield" size={16} className="mr-2" />
-                Лицензированные врачи
+              <Badge variant="secondary" className="px-4 py-2 text-sm hover:scale-105 transition-transform" role="listitem">
+                <Icon name="Shield" size={16} className="mr-2" aria-hidden="true" />
+                <span>Лицензированные врачи</span>
               </Badge>
-              <Badge variant="secondary" className="px-4 py-2 text-sm hover:scale-105 transition-transform">
-                <Icon name="Phone" size={16} className="mr-2" />
-                Работаем 24/7
+              <Badge variant="secondary" className="px-4 py-2 text-sm hover:scale-105 transition-transform" role="listitem">
+                <Icon name="Phone" size={16} className="mr-2" aria-hidden="true" />
+                <span>Работаем 24/7</span>
               </Badge>
             </div>
 

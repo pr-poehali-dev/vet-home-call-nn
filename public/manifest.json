@@ -1,0 +1,54 @@
+{
+  "name": "ВетДом НН - Ветеринар на дом",
+  "short_name": "ВетДом НН",
+  "description": "Профессиональная ветеринарная помощь на дому в Нижнем Новгороде",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#f97316",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/img/2766dfa5-0de8-407e-b886-56847eed852d.jpg",
+      "sizes": "192x192",
+      "type": "image/jpeg",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/img/f508f102-8ae4-4e3d-8d7a-9777ee6b7d9d.jpg", 
+      "sizes": "512x512",
+      "type": "image/jpeg",
+      "purpose": "maskable any"
+    }
+  ],
+  "categories": ["medical", "health", "pets"],
+  "lang": "ru",
+  "dir": "ltr",
+  "prefer_related_applications": false,
+  "shortcuts": [
+    {
+      "name": "Вызвать ветеринара",
+      "short_name": "Вызов",
+      "description": "Быстрый вызов ветеринара на дом",
+      "url": "/?action=call",
+      "icons": [
+        {
+          "src": "/img/2766dfa5-0de8-407e-b886-56847eed852d.jpg",
+          "sizes": "192x192"
+        }
+      ]
+    },
+    {
+      "name": "Экстренная помощь",
+      "short_name": "Экстренная",
+      "description": "Экстренный вызов ветеринара",
+      "url": "/?action=emergency",
+      "icons": [
+        {
+          "src": "/img/f508f102-8ae4-4e3d-8d7a-9777ee6b7d9d.jpg",
+          "sizes": "192x192"
+        }
+      ]
+    }
+  ]
+}

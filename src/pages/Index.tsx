@@ -1,18 +1,23 @@
-import React, { memo, useCallback } from 'react';
+import React, { memo, useCallback, Suspense, lazy } from 'react';
 import { HelmetProvider } from 'react-helmet-async';
 import { useAnimations } from '@/hooks/useAnimations';
 import { useForm } from '@/hooks/useForm';
 import { useExitIntent } from '@/hooks/useExitIntent';
+import { usePerformance } from '@/hooks/usePerformance';
 import { FormData } from '@/types';
 import SEO from '@/components/SEO';
+import ErrorBoundary from '@/components/ErrorBoundary';
+import LoadingSpinner from '@/components/LoadingSpinner';
 import HeroSection from '@/components/sections/HeroSection';
-import ServicesSection from '@/components/sections/ServicesSection';
-import SuccessStoriesSection from '@/components/sections/SuccessStoriesSection';
-import UrgencySection from '@/components/sections/UrgencySection';
-import GuaranteeSection from '@/components/sections/GuaranteeSection';
-import ReviewsSection from '@/components/sections/ReviewsSection';
-import FooterSection from '@/components/sections/FooterSection';
-import ChatBot from '@/components/ChatBot';
+
+// Lazy loaded components
+const ServicesSection = lazy(() => import('@/components/sections/ServicesSection'));
+const SuccessStoriesSection = lazy(() => import('@/components/sections/SuccessStoriesSection'));
+const UrgencySection = lazy(() => import('@/components/sections/UrgencySection'));
+const GuaranteeSection = lazy(() => import('@/components/sections/GuaranteeSection'));
+const ReviewsSection = lazy(() => import('@/components/sections/ReviewsSection'));
+const FooterSection = lazy(() => import('@/components/sections/FooterSection'));
+const ChatBot = lazy(() => import('@/components/ChatBot'));
 
 const Index = memo(() => {
   const initialFormData: FormData = {
@@ -34,6 +39,7 @@ const Index = memo(() => {
     isExitPopupOpen, 
     setIsExitPopupOpen 
   } = useExitIntent();
+  const { trackUserAction, logMetrics } = usePerformance();
   
   const [isDialogOpen, setIsDialogOpen] = React.useState(false);
 
@@ -52,15 +58,24 @@ const Index = memo(() => {
 
   const openDialog = useCallback(() => {
     setIsDialogOpen(true);
-  }, []);
+    trackUserAction('open_dialog', 'form');
+  }, [trackUserAction]);
 
   const closeDialog = useCallback(() => {
     setIsDialogOpen(false);
-  }, []);
+    trackUserAction('close_dialog', 'form');
+  }, [trackUserAction]);
 
   const closeExitPopup = useCallback(() => {
     setIsExitPopupOpen(false);
   }, [setIsExitPopupOpen]);
+
+  // Performance logging для разработки
+  React.useEffect(() => {
+    if (process.env.NODE_ENV === 'development') {
+      setTimeout(logMetrics, 2000);
+    }
+  }, [logMetrics]);
 
   return (
     <HelmetProvider>
@@ -77,30 +92,58 @@ const Index = memo(() => {
           isLoading={isLoading}
         />
         
-        <ServicesSection getAnimationClass={getAnimationClass} />
+        <ErrorBoundary fallback="Ошибка загрузки услуг">
+          <Suspense fallback={<LoadingSpinner />}>
+            <ServicesSection getAnimationClass={getAnimationClass} />
+          </Suspense>
+        </ErrorBoundary>
         
-        <SuccessStoriesSection getAnimationClass={getAnimationClass} />
+        <ErrorBoundary fallback="Ошибка загрузки историй">
+          <Suspense fallback={<LoadingSpinner />}>
+            <SuccessStoriesSection getAnimationClass={getAnimationClass} />
+          </Suspense>
+        </ErrorBoundary>
         
-        <UrgencySection setIsFormOpen={openDialog} />
+        <ErrorBoundary fallback="Ошибка загрузки предложения">
+          <Suspense fallback={<LoadingSpinner />}>
+            <UrgencySection setIsFormOpen={openDialog} />
+          </Suspense>
+        </ErrorBoundary>
         
-        <GuaranteeSection />
+        <ErrorBoundary fallback="Ошибка загрузки гарантий">
+          <Suspense fallback={<LoadingSpinner />}>
+            <GuaranteeSection />
+          </Suspense>
+        </ErrorBoundary>
         
-        <ReviewsSection getAnimationClass={getAnimationClass} />
+        <ErrorBoundary fallback="Ошибка загрузки отзывов">
+          <Suspense fallback={<LoadingSpinner />}>
+            <ReviewsSection getAnimationClass={getAnimationClass} />
+          </Suspense>
+        </ErrorBoundary>
         
-        <FooterSection 
-          formData={formData}
-          setFormData={setFormData}
-          isDialogOpen={isDialogOpen}
-          setIsDialogOpen={closeDialog}
-          handleSubmit={handleSubmit}
-          isExitPopupOpen={isExitPopupOpen}
-          setIsExitPopupOpen={closeExitPopup}
-          getAnimationClass={getAnimationClass}
-          errors={errors}
-          isLoading={isLoading}
-        />
+        <ErrorBoundary fallback="Ошибка загрузки футера">
+          <Suspense fallback={<LoadingSpinner />}>
+            <FooterSection 
+              formData={formData}
+              setFormData={setFormData}
+              isDialogOpen={isDialogOpen}
+              setIsDialogOpen={closeDialog}
+              handleSubmit={handleSubmit}
+              isExitPopupOpen={isExitPopupOpen}
+              setIsExitPopupOpen={closeExitPopup}
+              getAnimationClass={getAnimationClass}
+              errors={errors}
+              isLoading={isLoading}
+            />
+          </Suspense>
+        </ErrorBoundary>
         
-        <ChatBot />
+        <ErrorBoundary fallback="Ошибка загрузки чата">
+          <Suspense fallback={<LoadingSpinner />}>
+            <ChatBot />
+          </Suspense>
+        </ErrorBoundary>
       </div>
     </HelmetProvider>
   );
