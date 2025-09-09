@@ -276,8 +276,6 @@ const ServicesSection = memo(({ getAnimationClass }: ServicesSectionProps) => {
       </section>
     </>
   );
-};
-
 });
 
 ServicesSection.displayName = 'ServicesSection';
