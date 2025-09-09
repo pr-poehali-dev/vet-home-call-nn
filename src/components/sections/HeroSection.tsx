@@ -150,6 +150,7 @@ const HeroSection = memo(({
           </div>
         </div>
       </section>
+      </main>
     </>
   );
 });
