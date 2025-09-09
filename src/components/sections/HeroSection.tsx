@@ -1,31 +1,32 @@
+import React, { memo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from '@/components/ui/dialog';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import Icon from '@/components/ui/icon';
+import { FormData, FormErrors } from '@/types';
 
 interface HeroSectionProps {
-  formData: {
-    name: string;
-    phone: string;
-    address: string;
-    description: string;
-  };
-  setFormData: (data: any) => void;
+  formData: FormData;
+  setFormData: (data: FormData | ((prev: FormData) => FormData)) => void;
   isDialogOpen: boolean;
   setIsDialogOpen: (open: boolean) => void;
   handleSubmit: (e: React.FormEvent) => void;
   getAnimationClass: (id: string, animation: string) => string;
+  errors?: FormErrors;
+  isLoading?: boolean;
 }
 
-const HeroSection = ({
+const HeroSection = memo(({
   formData,
   setFormData,
   isDialogOpen,
   setIsDialogOpen,
   handleSubmit,
-  getAnimationClass
+  getAnimationClass,
+  errors = {},
+  isLoading = false
 }: HeroSectionProps) => {
   return (
     <>
@@ -147,5 +148,9 @@ const HeroSection = ({
     </>
   );
 };
+
+});
+
+HeroSection.displayName = 'HeroSection';
 
 export default HeroSection;
