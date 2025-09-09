@@ -147,8 +147,6 @@ const HeroSection = memo(({
       </section>
     </>
   );
-};
-
 });
 
 HeroSection.displayName = 'HeroSection';
