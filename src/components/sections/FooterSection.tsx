@@ -4,6 +4,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from '@/components/ui/accordion';
 import Icon from '@/components/ui/icon';
+import { memo } from 'react';
 
 interface FooterSectionProps {
   formData: {
@@ -221,4 +222,4 @@ const FooterSection = ({
   );
 };
 
-export default FooterSection;
+export default memo(FooterSection);

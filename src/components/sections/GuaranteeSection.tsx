@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import Icon from '@/components/ui/icon';
 
@@ -55,4 +56,4 @@ const GuaranteeSection = () => {
   );
 };
 
-export default GuaranteeSection;
+export default memo(GuaranteeSection);
