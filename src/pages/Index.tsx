@@ -89,7 +89,7 @@ export default function Index() {
       text: 'Спасибо огромное за спасение нашего кота! Приехали быстро, врач очень опытный.',
       rating: 5,
       date: '2 дня назад',
-      photo: '/img/2766dfa5-0de8-407e-b886-56847eed852d.jpg',
+      photo: '/img/webapp/2766dfa5-0de8-407e-b886-56847eed852d.jpg',
       petName: 'Мурзик (кот)'
     },
     {
@@ -97,7 +97,7 @@ export default function Index() {
       text: 'Профессиональный подход, доступные цены. Рекомендую всем владельцам животных!',
       rating: 5,
       date: '1 неделю назад',
-      photo: '/img/f508f102-8ae4-4e3d-8d7a-9777ee6b7d9d.jpg',
+      photo: '/img/webapp/f508f102-8ae4-4e3d-8d7a-9777ee6b7d9d.jpg',
       petName: 'Рекс (собака)'
     },
     {
@@ -105,7 +105,7 @@ export default function Index() {
       text: 'Врач приехал в течение часа, провел полный осмотр собаки. Очень довольны!',
       rating: 5,
       date: '2 недели назад',
-      photo: '/img/5c44ef27-fb2b-46ce-9e5d-021bd49799fd.jpg',
+      photo: '/img/webapp/5c44ef27-fb2b-46ce-9e5d-021bd49799fd.jpg',
       petName: 'Белка (собака)'
     }
   ];
@@ -114,19 +114,19 @@ export default function Index() {
     {
       title: 'Спасение Мурзика',
       description: 'Тяжелое отравление превратилось в полное выздоровление за 5 дней',
-      image: '/img/d406ab69-2638-499a-992c-46baccefa37f.jpg',
+      image: '/img/webapp/d406ab69-2638-499a-992c-46baccefa37f.jpg',
       duration: '5 дней лечения'
     },
     {
       title: 'Операция Рекса',
       description: 'Сложный перелом лапы - успешная операция и полная реабилитация',
-      image: '/img/f8094e65-4045-4516-a760-5941a040ed18.jpg',
+      image: '/img/webapp/f8094e65-4045-4516-a760-5941a040ed18.jpg',
       duration: '2 недели восстановления'
     },
     {
       title: 'Лечение кролика Пушка',
       description: 'Проблемы с пищеварением решены комплексной терапией',
-      image: '/img/11d9e6f2-055a-493f-8cdb-edfa46aee1d9.jpg',
+      image: '/img/webapp/11d9e6f2-055a-493f-8cdb-edfa46aee1d9.jpg',
       duration: '10 дней лечения'
     }
   ];
@@ -165,21 +165,21 @@ export default function Index() {
       specialization: 'Главный ветеринар, терапевт',
       experience: '15 лет опыта',
       description: 'Специализируется на комплексной диагностике и лечении домашних животных. Эксперт по внутренним болезням кошек и собак.',
-      image: '/img/bf07cebe-5bbd-4978-8918-41e033828f0d.jpg'
+      image: '/img/webapp/bf07cebe-5bbd-4978-8918-41e033828f0d.jpg'
     },
     {
       name: 'Александр Петрович Волков',
       specialization: 'Хирург-ортопед',
       experience: '20 лет опыта',
       description: 'Проводит сложные хирургические операции, специалист по травматологии и ортопедии. Опыт работы с экзотическими животными.',
-      image: '/img/a0306b70-5843-42ea-92ab-671d0caf3ca1.jpg'
+      image: '/img/webapp/a0306b70-5843-42ea-92ab-671d0caf3ca1.jpg'
     },
     {
       name: 'Мария Сергеевна Лебедева',
       specialization: 'Терапевт, дерматолог',
       experience: '8 лет опыта',
       description: 'Эксперт по кожным заболеваниям и аллергиям у животных. Специализируется на работе с грызунами и кроликами.',
-      image: '/img/dbf00f78-6e44-4997-ba57-248f8b058533.jpg'
+      image: '/img/webapp/dbf00f78-6e44-4997-ba57-248f8b058533.jpg'
     }
   ];
 
@@ -285,7 +285,7 @@ export default function Index() {
             className={`relative transition-all duration-700 ${getAnimationClass('hero-image', 'animate-fade-in-right')}`}
           >
             <img 
-              src="/img/872752f1-24ec-4d2e-b728-1d046f13289f.jpg" 
+              src="/img/webapp/872752f1-24ec-4d2e-b728-1d046f13289f.jpg" 
               alt="Счастливые домашние животные" 
               className="rounded-2xl shadow-2xl w-full h-96 object-cover hover:scale-105 transition-transform duration-500"
             />
