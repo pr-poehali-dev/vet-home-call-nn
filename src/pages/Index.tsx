@@ -89,7 +89,7 @@ export default function Index() {
       text: 'Спасибо огромное за спасение нашего кота! Приехали быстро, врач очень опытный.',
       rating: 5,
       date: '2 дня назад',
-      photo: '/img/2766dfa5-0de8-407e-b886-56847eed852d.jpg',
+      photo: 'https://cdn.poehali.dev/projects/6f7a6d9d-7dd8-41dc-b2a7-0ea3db209268/files/19e3965f-1edd-44ee-8c4d-cf0b61303a1a.jpg',
       petName: 'Мурзик (кот)'
     },
     {
@@ -97,7 +97,7 @@ export default function Index() {
       text: 'Профессиональный подход, доступные цены. Рекомендую всем владельцам животных!',
       rating: 5,
       date: '1 неделю назад',
-      photo: '/img/f508f102-8ae4-4e3d-8d7a-9777ee6b7d9d.jpg',
+      photo: 'https://cdn.poehali.dev/projects/6f7a6d9d-7dd8-41dc-b2a7-0ea3db209268/files/3a5c786b-0e01-415e-9dea-67b55991bb45.jpg',
       petName: 'Рекс (собака)'
     },
     {
@@ -105,7 +105,7 @@ export default function Index() {
       text: 'Врач приехал в течение часа, провел полный осмотр собаки. Очень довольны!',
       rating: 5,
       date: '2 недели назад',
-      photo: '/img/5c44ef27-fb2b-46ce-9e5d-021bd49799fd.jpg',
+      photo: 'https://cdn.poehali.dev/projects/6f7a6d9d-7dd8-41dc-b2a7-0ea3db209268/files/6933d157-fac9-4541-8cbf-d761fa5c01a2.jpg',
       petName: 'Белка (собака)'
     }
   ];
@@ -114,19 +114,19 @@ export default function Index() {
     {
       title: 'Спасение Мурзика',
       description: 'Тяжелое отравление превратилось в полное выздоровление за 5 дней',
-      image: '/img/d406ab69-2638-499a-992c-46baccefa37f.jpg',
+      image: 'https://cdn.poehali.dev/projects/6f7a6d9d-7dd8-41dc-b2a7-0ea3db209268/files/b0b083ed-7d66-4bee-9a6f-548fa9d9315f.jpg',
       duration: '5 дней лечения'
     },
     {
       title: 'Операция Рекса',
       description: 'Сложный перелом лапы - успешная операция и полная реабилитация',
-      image: '/img/f8094e65-4045-4516-a760-5941a040ed18.jpg',
+      image: 'https://cdn.poehali.dev/projects/6f7a6d9d-7dd8-41dc-b2a7-0ea3db209268/files/61022e07-e579-4605-bc66-5f099e995cd3.jpg',
       duration: '2 недели восстановления'
     },
     {
       title: 'Лечение кролика Пушка',
       description: 'Проблемы с пищеварением решены комплексной терапией',
-      image: '/img/11d9e6f2-055a-493f-8cdb-edfa46aee1d9.jpg',
+      image: 'https://cdn.poehali.dev/projects/6f7a6d9d-7dd8-41dc-b2a7-0ea3db209268/files/2e424960-ba1a-424d-b9d4-5301b1d54fb8.jpg',
       duration: '10 дней лечения'
     }
   ];
@@ -165,21 +165,21 @@ export default function Index() {
       specialization: 'Главный ветеринар, терапевт',
       experience: '15 лет опыта',
       description: 'Специализируется на комплексной диагностике и лечении домашних животных. Эксперт по внутренним болезням кошек и собак.',
-      image: '/img/bf07cebe-5bbd-4978-8918-41e033828f0d.jpg'
+      image: 'https://cdn.poehali.dev/projects/6f7a6d9d-7dd8-41dc-b2a7-0ea3db209268/files/5453cf96-ce98-4df1-a394-c28840060b4d.jpg'
     },
     {
       name: 'Александр Петрович Волков',
       specialization: 'Хирург-ортопед',
       experience: '20 лет опыта',
       description: 'Проводит сложные хирургические операции, специалист по травматологии и ортопедии. Опыт работы с экзотическими животными.',
-      image: '/img/a0306b70-5843-42ea-92ab-671d0caf3ca1.jpg'
+      image: 'https://cdn.poehali.dev/projects/6f7a6d9d-7dd8-41dc-b2a7-0ea3db209268/files/240f8d2d-6007-48b1-8462-f3af433c528e.jpg'
     },
     {
       name: 'Мария Сергеевна Лебедева',
       specialization: 'Терапевт, дерматолог',
       experience: '8 лет опыта',
       description: 'Эксперт по кожным заболеваниям и аллергиям у животных. Специализируется на работе с грызунами и кроликами.',
-      image: '/img/dbf00f78-6e44-4997-ba57-248f8b058533.jpg'
+      image: 'https://cdn.poehali.dev/projects/6f7a6d9d-7dd8-41dc-b2a7-0ea3db209268/files/bace71d2-a86a-4a3f-9b23-068338afe547.jpg'
     }
   ];
 
