@@ -88,19 +88,46 @@ export default function Index() {
       name: 'Анна Смирнова',
       text: 'Спасибо огромное за спасение нашего кота! Приехали быстро, врач очень опытный.',
       rating: 5,
-      date: '2 дня назад'
+      date: '2 дня назад',
+      photo: '/img/2766dfa5-0de8-407e-b886-56847eed852d.jpg',
+      petName: 'Мурзик (кот)'
     },
     {
       name: 'Михаил Петров',
       text: 'Профессиональный подход, доступные цены. Рекомендую всем владельцам животных!',
       rating: 5,
-      date: '1 неделю назад'
+      date: '1 неделю назад',
+      photo: '/img/f508f102-8ae4-4e3d-8d7a-9777ee6b7d9d.jpg',
+      petName: 'Рекс (собака)'
     },
     {
       name: 'Елена Волкова',
       text: 'Врач приехал в течение часа, провел полный осмотр собаки. Очень довольны!',
       rating: 5,
-      date: '2 недели назад'
+      date: '2 недели назад',
+      photo: '/img/5c44ef27-fb2b-46ce-9e5d-021bd49799fd.jpg',
+      petName: 'Белка (собака)'
+    }
+  ];
+
+  const stories = [
+    {
+      title: 'Спасение Мурзика',
+      description: 'Тяжелое отравление превратилось в полное выздоровление за 5 дней',
+      image: '/img/d406ab69-2638-499a-992c-46baccefa37f.jpg',
+      duration: '5 дней лечения'
+    },
+    {
+      title: 'Операция Рекса',
+      description: 'Сложный перелом лапы - успешная операция и полная реабилитация',
+      image: '/img/f8094e65-4045-4516-a760-5941a040ed18.jpg',
+      duration: '2 недели восстановления'
+    },
+    {
+      title: 'Лечение кролика Пушка',
+      description: 'Проблемы с пищеварением решены комплексной терапией',
+      image: '/img/11d9e6f2-055a-493f-8cdb-edfa46aee1d9.jpg',
+      duration: '10 дней лечения'
     }
   ];
 
@@ -344,7 +371,7 @@ export default function Index() {
               >
                 <CardHeader className="text-center">
                   <div className="mx-auto mb-4 w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center hover:bg-primary/20 transition-colors">
-                    <Icon name={service.icon as any} size={32} className="text-primary" />
+                    <Icon name={service.icon} size={32} className="text-primary" />
                   </div>
                   <CardTitle className="font-montserrat">{service.title}</CardTitle>
                   <CardDescription className="font-open-sans">{service.description}</CardDescription>
@@ -478,6 +505,56 @@ export default function Index() {
         </div>
       </section>
 
+      {/* Success Stories */}
+      <section className="py-16 bg-gradient-to-br from-blue-50 to-purple-50">
+        <div className="container mx-auto px-4">
+          <div
+            id="success-title"
+            data-animate
+            className={`transition-all duration-700 ${getAnimationClass('success-title', 'animate-fade-in-up')}`}
+          >
+            <h3 className="text-3xl font-montserrat font-bold text-center text-secondary mb-4">
+              Истории выздоровления
+            </h3>
+            <p className="text-center text-gray-600 font-open-sans mb-12 max-w-2xl mx-auto">
+              Реальные результаты нашей работы
+            </p>
+          </div>
+          <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {stories.map((story, index) => (
+              <Card
+                key={index}
+                id={`success-${index}`}
+                data-animate
+                className={`transition-all duration-700 delay-${index * 200} hover:shadow-xl hover:-translate-y-2 overflow-hidden ${getAnimationClass(`success-${index}`, 'animate-scale-in')}`}
+              >
+                <div className="relative h-48 overflow-hidden">
+                  <img
+                    src={story.image}
+                    alt={story.title}
+                    className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
+                  />
+                  <div className="absolute top-4 right-4">
+                    <Badge className="bg-green-500 text-white">
+                      <Icon name="Check" size={12} className="mr-1" />
+                      Успех
+                    </Badge>
+                  </div>
+                </div>
+                <CardContent className="p-6">
+                  <h4 className="text-lg font-montserrat font-bold text-secondary mb-2">{story.title}</h4>
+                  <p className="text-gray-600 font-open-sans text-sm mb-4">{story.description}</p>
+                  <div className="flex items-center text-primary">
+                    <Icon name="Clock" size={16} className="mr-2" />
+                    <span className="text-sm font-semibold">{story.duration}</span>
+                  </div>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Reviews */}
       <section className="py-16 bg-white">
         <div className="container mx-auto px-4">
@@ -499,16 +576,29 @@ export default function Index() {
                 className={`bg-white transition-all duration-700 delay-${index * 200} hover:shadow-lg hover:scale-105 ${getAnimationClass(`review-${index}`, 'animate-fade-in-up')}`}
               >
                 <CardContent className="p-6">
-                  <div className="flex items-center mb-4">
+                  <img
+                    src={review.photo}
+                    alt={`${review.name} с питомцем`}
+                    className="w-full h-48 object-cover rounded-lg mb-4"
+                  />
+                  <div className="flex items-center justify-between mb-3">
                     <div className="flex space-x-1">
                       {[...Array(review.rating)].map((_, i) => (
                         <Icon key={i} name="Star" size={16} className="text-yellow-400 fill-current" />
                       ))}
                     </div>
-                    <span className="ml-2 text-sm text-gray-500">{review.date}</span>
+                    <span className="text-sm text-gray-500">{review.date}</span>
                   </div>
                   <p className="text-gray-700 mb-4 font-open-sans">"{review.text}"</p>
-                  <div className="font-semibold text-secondary">{review.name}</div>
+                  <div className="flex items-center">
+                    <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
+                      {review.name.split(' ').map((n: string) => n[0]).join('')}
+                    </div>
+                    <div>
+                      <div className="font-semibold text-secondary">{review.name}</div>
+                      <div className="text-xs text-gray-500">Владелец: {review.petName}</div>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             ))}
