@@ -1,4 +1,3 @@
-import React, { memo } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
@@ -8,7 +7,7 @@ interface ServicesSectionProps {
   getAnimationClass: (id: string, animation: string) => string;
 }
 
-const ServicesSection = memo(({ getAnimationClass }: ServicesSectionProps) => {
+const ServicesSection = ({ getAnimationClass }: ServicesSectionProps) => {
   const services = [
     {
       icon: 'Stethoscope',
@@ -276,8 +275,6 @@ const ServicesSection = memo(({ getAnimationClass }: ServicesSectionProps) => {
       </section>
     </>
   );
-});
-
-ServicesSection.displayName = 'ServicesSection';
+};
 
 export default ServicesSection;

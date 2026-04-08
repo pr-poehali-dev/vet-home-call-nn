@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import Icon from '@/components/ui/icon';
@@ -89,4 +88,4 @@ const SuccessStoriesSection = ({ getAnimationClass }: SuccessStoriesSectionProps
   );
 };
 
-export default memo(SuccessStoriesSection);
+export default SuccessStoriesSection;

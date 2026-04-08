@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import Icon from '@/components/ui/icon';
 
@@ -114,4 +113,4 @@ const ReviewsSection = ({ getAnimationClass }: ReviewsSectionProps) => {
   );
 };
 
-export default memo(ReviewsSection);
+export default ReviewsSection;

@@ -1,154 +1,104 @@
-import React, { memo, useCallback, Suspense, lazy } from 'react';
-import { HelmetProvider } from 'react-helmet-async';
-import { useAnimations } from '@/hooks/useAnimations';
-import { useForm } from '@/hooks/useForm';
-import { useExitIntent } from '@/hooks/useExitIntent';
-import { usePerformance } from '@/hooks/usePerformance';
-import { FormData } from '@/types';
-import SEO from '@/components/SEO';
-import ErrorBoundary from '@/components/ErrorBoundary';
-import LoadingSpinner from '@/components/LoadingSpinner';
+import { useState, useEffect, useRef } from 'react';
 import HeroSection from '@/components/sections/HeroSection';
+import ServicesSection from '@/components/sections/ServicesSection';
+import SuccessStoriesSection from '@/components/sections/SuccessStoriesSection';
+import UrgencySection from '@/components/sections/UrgencySection';
+import GuaranteeSection from '@/components/sections/GuaranteeSection';
+import ReviewsSection from '@/components/sections/ReviewsSection';
+import FooterSection from '@/components/sections/FooterSection';
+import ChatBot from '@/components/ChatBot';
 
-// Lazy loaded components
-const ServicesSection = lazy(() => import('@/components/sections/ServicesSection'));
-const SuccessStoriesSection = lazy(() => import('@/components/sections/SuccessStoriesSection'));
-const UrgencySection = lazy(() => import('@/components/sections/UrgencySection'));
-const GuaranteeSection = lazy(() => import('@/components/sections/GuaranteeSection'));
-const ReviewsSection = lazy(() => import('@/components/sections/ReviewsSection'));
-const FooterSection = lazy(() => import('@/components/sections/FooterSection'));
-const ChatBot = lazy(() => import('@/components/ChatBot'));
-
-const Index = memo(() => {
-  const initialFormData: FormData = {
+export default function Index() {
+  const [formData, setFormData] = useState({
     name: '',
     phone: '',
     address: '',
     description: ''
+  });
+  const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isExitPopupOpen, setIsExitPopupOpen] = useState(false);
+  const [visibleElements, setVisibleElements] = useState<Set<string>>(new Set());
+  const observerRef = useRef<IntersectionObserver | null>(null);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    console.log('Заявка отправлена:', formData);
+    setIsDialogOpen(false);
+    // Здесь будет логика отправки формы
   };
 
-  const { getAnimationClass } = useAnimations();
-  const { 
-    formData, 
-    setFormData, 
-    errors, 
-    isLoading, 
-    submitForm 
-  } = useForm(initialFormData);
-  const { 
-    isExitPopupOpen, 
-    setIsExitPopupOpen 
-  } = useExitIntent();
-  const { trackUserAction, logMetrics } = usePerformance();
-  
-  const [isDialogOpen, setIsDialogOpen] = React.useState(false);
+  useEffect(() => {
+    observerRef.current = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setVisibleElements(prev => new Set([...prev, entry.target.id]));
+          }
+        });
+      },
+      { threshold: 0.1 }
+    );
 
-  const handleSubmit = useCallback(async (e: React.FormEvent) => {
-    e.preventDefault();
-    const success = await submitForm(async (data) => {
-      console.log('Заявка отправлена:', data);
-      // Здесь будет API вызов
-      await new Promise(resolve => setTimeout(resolve, 1000));
+    const elements = document.querySelectorAll('[data-animate]');
+    elements.forEach(el => {
+      if (observerRef.current) {
+        observerRef.current.observe(el);
+      }
     });
-    
-    if (success) {
-      setIsDialogOpen(false);
-    }
-  }, [submitForm]);
 
-  const openDialog = useCallback(() => {
-    setIsDialogOpen(true);
-    trackUserAction('open_dialog', 'form');
-  }, [trackUserAction]);
+    const handleMouseLeave = (e: MouseEvent) => {
+      if (e.clientY <= 0) {
+        setIsExitPopupOpen(true);
+      }
+    };
 
-  const closeDialog = useCallback(() => {
-    setIsDialogOpen(false);
-    trackUserAction('close_dialog', 'form');
-  }, [trackUserAction]);
+    document.addEventListener('mouseleave', handleMouseLeave);
 
-  const closeExitPopup = useCallback(() => {
-    setIsExitPopupOpen(false);
-  }, [setIsExitPopupOpen]);
+    return () => {
+      if (observerRef.current) {
+        observerRef.current.disconnect();
+      }
+      document.removeEventListener('mouseleave', handleMouseLeave);
+    };
+  }, []);
 
-  // Performance logging для разработки
-  React.useEffect(() => {
-    if (process.env.NODE_ENV === 'development') {
-      setTimeout(logMetrics, 2000);
-    }
-  }, [logMetrics]);
+  const getAnimationClass = (id: string, animation: string) => {
+    return visibleElements.has(id) ? animation : 'opacity-0';
+  };
 
   return (
-    <HelmetProvider>
-      <SEO />
-      <div className="min-h-screen bg-gradient-to-b from-orange-50 to-white custom-scrollbar">
-        <HeroSection 
-          formData={formData}
-          setFormData={setFormData}
-          isDialogOpen={isDialogOpen}
-          setIsDialogOpen={openDialog}
-          handleSubmit={handleSubmit}
-          getAnimationClass={getAnimationClass}
-          errors={errors}
-          isLoading={isLoading}
-        />
-        
-        <ErrorBoundary fallback="Ошибка загрузки услуг">
-          <Suspense fallback={<LoadingSpinner />}>
-            <ServicesSection getAnimationClass={getAnimationClass} />
-          </Suspense>
-        </ErrorBoundary>
-        
-        <ErrorBoundary fallback="Ошибка загрузки историй">
-          <Suspense fallback={<LoadingSpinner />}>
-            <SuccessStoriesSection getAnimationClass={getAnimationClass} />
-          </Suspense>
-        </ErrorBoundary>
-        
-        <ErrorBoundary fallback="Ошибка загрузки предложения">
-          <Suspense fallback={<LoadingSpinner />}>
-            <UrgencySection setIsFormOpen={openDialog} />
-          </Suspense>
-        </ErrorBoundary>
-        
-        <ErrorBoundary fallback="Ошибка загрузки гарантий">
-          <Suspense fallback={<LoadingSpinner />}>
-            <GuaranteeSection />
-          </Suspense>
-        </ErrorBoundary>
-        
-        <ErrorBoundary fallback="Ошибка загрузки отзывов">
-          <Suspense fallback={<LoadingSpinner />}>
-            <ReviewsSection getAnimationClass={getAnimationClass} />
-          </Suspense>
-        </ErrorBoundary>
-        
-        <ErrorBoundary fallback="Ошибка загрузки футера">
-          <Suspense fallback={<LoadingSpinner />}>
-            <FooterSection 
-              formData={formData}
-              setFormData={setFormData}
-              isDialogOpen={isDialogOpen}
-              setIsDialogOpen={closeDialog}
-              handleSubmit={handleSubmit}
-              isExitPopupOpen={isExitPopupOpen}
-              setIsExitPopupOpen={closeExitPopup}
-              getAnimationClass={getAnimationClass}
-              errors={errors}
-              isLoading={isLoading}
-            />
-          </Suspense>
-        </ErrorBoundary>
-        
-        <ErrorBoundary fallback="Ошибка загрузки чата">
-          <Suspense fallback={<LoadingSpinner />}>
-            <ChatBot />
-          </Suspense>
-        </ErrorBoundary>
-      </div>
-    </HelmetProvider>
+    <div className="min-h-screen bg-gradient-to-b from-orange-50 to-white">
+      <HeroSection 
+        formData={formData}
+        setFormData={setFormData}
+        isDialogOpen={isDialogOpen}
+        setIsDialogOpen={setIsDialogOpen}
+        handleSubmit={handleSubmit}
+        getAnimationClass={getAnimationClass}
+      />
+      
+      <ServicesSection getAnimationClass={getAnimationClass} />
+      
+      <SuccessStoriesSection getAnimationClass={getAnimationClass} />
+      
+      <UrgencySection setIsFormOpen={setIsDialogOpen} />
+      
+      <GuaranteeSection />
+      
+      <ReviewsSection getAnimationClass={getAnimationClass} />
+      
+      <FooterSection 
+        formData={formData}
+        setFormData={setFormData}
+        isDialogOpen={isDialogOpen}
+        setIsDialogOpen={setIsDialogOpen}
+        handleSubmit={handleSubmit}
+        isExitPopupOpen={isExitPopupOpen}
+        setIsExitPopupOpen={setIsExitPopupOpen}
+        getAnimationClass={getAnimationClass}
+      />
+      
+      <ChatBot />
+    </div>
   );
-});
-
-Index.displayName = 'Index';
-
-export default Index;
+}

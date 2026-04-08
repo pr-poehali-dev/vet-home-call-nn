@@ -1,4 +1,3 @@
-import { memo } from 'react';
 import { Button } from '@/components/ui/button';
 import Icon from '@/components/ui/icon';
 
@@ -60,4 +59,4 @@ const UrgencySection = ({ setIsFormOpen }: UrgencySectionProps) => {
   );
 };
 
-export default memo(UrgencySection);
+export default UrgencySection;
