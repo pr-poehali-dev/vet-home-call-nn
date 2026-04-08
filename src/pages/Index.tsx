@@ -185,6 +185,17 @@ export default function Index() {
 
   return (
     <div className="min-h-screen bg-gradient-to-b from-orange-50 to-white">
+      {/* DEBUG: test image */}
+      <div style={{padding: '20px', background: 'red'}}>
+        <p style={{color: 'white'}}>TEST IMAGE BELOW:</p>
+        <img 
+          src="https://cdn.poehali.dev/projects/6f7a6d9d-7dd8-41dc-b2a7-0ea3db209268/files/5453cf96-ce98-4df1-a394-c28840060b4d.jpg" 
+          alt="test" 
+          style={{width: '200px', height: '200px', border: '3px solid yellow'}}
+          onError={() => console.error('IMAGE FAILED TO LOAD')}
+          onLoad={() => console.log('IMAGE LOADED OK')}
+        />
+      </div>
       {/* Header */}
       <header className="bg-white shadow-sm sticky top-0 z-50">
         <div className="container mx-auto px-4 py-4 flex justify-between items-center">
