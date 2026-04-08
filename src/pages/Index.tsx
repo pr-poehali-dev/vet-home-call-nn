@@ -16,6 +16,7 @@ export default function Index() {
     description: ''
   });
   const [isDialogOpen, setIsDialogOpen] = useState(false);
+  const [isExitPopupOpen, setIsExitPopupOpen] = useState(false);
   const [visibleElements, setVisibleElements] = useState<Set<string>>(new Set());
   const observerRef = useRef<IntersectionObserver | null>(null);
 
@@ -35,7 +36,7 @@ export default function Index() {
           }
         });
       },
-      { threshold: 0.05, rootMargin: '50px' }
+      { threshold: 0.1 }
     );
 
     const elements = document.querySelectorAll('[data-animate]');
@@ -45,15 +46,24 @@ export default function Index() {
       }
     });
 
+    const handleMouseLeave = (e: MouseEvent) => {
+      if (e.clientY <= 0) {
+        setIsExitPopupOpen(true);
+      }
+    };
+
+    document.addEventListener('mouseleave', handleMouseLeave);
+
     return () => {
       if (observerRef.current) {
         observerRef.current.disconnect();
       }
+      document.removeEventListener('mouseleave', handleMouseLeave);
     };
   }, []);
 
   const getAnimationClass = (id: string, animation: string) => {
-    return visibleElements.has(id) ? animation : '';
+    return visibleElements.has(id) ? animation : 'opacity-0';
   };
 
   const services = [
@@ -88,46 +98,19 @@ export default function Index() {
       name: 'Анна Смирнова',
       text: 'Спасибо огромное за спасение нашего кота! Приехали быстро, врач очень опытный.',
       rating: 5,
-      date: '2 дня назад',
-      photo: 'https://cdn.poehali.dev/projects/6f7a6d9d-7dd8-41dc-b2a7-0ea3db209268/files/19e3965f-1edd-44ee-8c4d-cf0b61303a1a.jpg',
-      petName: 'Мурзик (кот)'
+      date: '2 дня назад'
     },
     {
       name: 'Михаил Петров',
       text: 'Профессиональный подход, доступные цены. Рекомендую всем владельцам животных!',
       rating: 5,
-      date: '1 неделю назад',
-      photo: 'https://cdn.poehali.dev/projects/6f7a6d9d-7dd8-41dc-b2a7-0ea3db209268/files/3a5c786b-0e01-415e-9dea-67b55991bb45.jpg',
-      petName: 'Рекс (собака)'
+      date: '1 неделю назад'
     },
     {
       name: 'Елена Волкова',
       text: 'Врач приехал в течение часа, провел полный осмотр собаки. Очень довольны!',
       rating: 5,
-      date: '2 недели назад',
-      photo: 'https://cdn.poehali.dev/projects/6f7a6d9d-7dd8-41dc-b2a7-0ea3db209268/files/6933d157-fac9-4541-8cbf-d761fa5c01a2.jpg',
-      petName: 'Белка (собака)'
-    }
-  ];
-
-  const stories = [
-    {
-      title: 'Спасение Мурзика',
-      description: 'Тяжелое отравление превратилось в полное выздоровление за 5 дней',
-      image: 'https://cdn.poehali.dev/projects/6f7a6d9d-7dd8-41dc-b2a7-0ea3db209268/files/b0b083ed-7d66-4bee-9a6f-548fa9d9315f.jpg',
-      duration: '5 дней лечения'
-    },
-    {
-      title: 'Операция Рекса',
-      description: 'Сложный перелом лапы - успешная операция и полная реабилитация',
-      image: 'https://cdn.poehali.dev/projects/6f7a6d9d-7dd8-41dc-b2a7-0ea3db209268/files/61022e07-e579-4605-bc66-5f099e995cd3.jpg',
-      duration: '2 недели восстановления'
-    },
-    {
-      title: 'Лечение кролика Пушка',
-      description: 'Проблемы с пищеварением решены комплексной терапией',
-      image: 'https://cdn.poehali.dev/projects/6f7a6d9d-7dd8-41dc-b2a7-0ea3db209268/files/2e424960-ba1a-424d-b9d4-5301b1d54fb8.jpg',
-      duration: '10 дней лечения'
+      date: '2 недели назад'
     }
   ];
 
@@ -165,21 +148,21 @@ export default function Index() {
       specialization: 'Главный ветеринар, терапевт',
       experience: '15 лет опыта',
       description: 'Специализируется на комплексной диагностике и лечении домашних животных. Эксперт по внутренним болезням кошек и собак.',
-      image: 'https://cdn.poehali.dev/projects/6f7a6d9d-7dd8-41dc-b2a7-0ea3db209268/files/5453cf96-ce98-4df1-a394-c28840060b4d.jpg'
+      image: '/img/bf07cebe-5bbd-4978-8918-41e033828f0d.jpg'
     },
     {
       name: 'Александр Петрович Волков',
       specialization: 'Хирург-ортопед',
       experience: '20 лет опыта',
       description: 'Проводит сложные хирургические операции, специалист по травматологии и ортопедии. Опыт работы с экзотическими животными.',
-      image: 'https://cdn.poehali.dev/projects/6f7a6d9d-7dd8-41dc-b2a7-0ea3db209268/files/240f8d2d-6007-48b1-8462-f3af433c528e.jpg'
+      image: '/img/a0306b70-5843-42ea-92ab-671d0caf3ca1.jpg'
     },
     {
       name: 'Мария Сергеевна Лебедева',
       specialization: 'Терапевт, дерматолог',
       experience: '8 лет опыта',
       description: 'Эксперт по кожным заболеваниям и аллергиям у животных. Специализируется на работе с грызунами и кроликами.',
-      image: 'https://cdn.poehali.dev/projects/6f7a6d9d-7dd8-41dc-b2a7-0ea3db209268/files/bace71d2-a86a-4a3f-9b23-068338afe547.jpg'
+      image: '/img/dbf00f78-6e44-4997-ba57-248f8b058533.jpg'
     }
   ];
 
@@ -371,7 +354,7 @@ export default function Index() {
               >
                 <CardHeader className="text-center">
                   <div className="mx-auto mb-4 w-16 h-16 bg-primary/10 rounded-full flex items-center justify-center hover:bg-primary/20 transition-colors">
-                    <Icon name={service.icon} size={32} className="text-primary" />
+                    <Icon name={service.icon as any} size={32} className="text-primary" />
                   </div>
                   <CardTitle className="font-montserrat">{service.title}</CardTitle>
                   <CardDescription className="font-open-sans">{service.description}</CardDescription>
@@ -477,8 +460,10 @@ export default function Index() {
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {doctors.map((doctor, index) => (
               <Card 
-                key={index}
-                className="bg-white transition-all duration-700 hover:shadow-xl hover:-translate-y-2"
+                key={index} 
+                id={`doctor-${index}`}
+                data-animate
+                className={`bg-white transition-all duration-700 delay-${index * 150} hover:shadow-xl hover:-translate-y-2 ${getAnimationClass(`doctor-${index}`, 'animate-scale-in')}`}
               >
                 <div className="relative overflow-hidden h-64">
                   <img 
@@ -503,30 +488,52 @@ export default function Index() {
         </div>
       </section>
 
-      {/* Success Stories */}
+      {/* Before/After Success Stories */}
       <section className="py-16 bg-gradient-to-br from-blue-50 to-purple-50">
         <div className="container mx-auto px-4">
-          <div
-            id="success-title"
-            data-animate
+          <div 
+            id="success-title" 
+            data-animate 
             className={`transition-all duration-700 ${getAnimationClass('success-title', 'animate-fade-in-up')}`}
           >
             <h3 className="text-3xl font-montserrat font-bold text-center text-secondary mb-4">
               Истории выздоровления
             </h3>
             <p className="text-center text-gray-600 font-open-sans mb-12 max-w-2xl mx-auto">
-              Реальные результаты нашей работы
+              Реальные результаты нашей работы - до и после лечения
             </p>
           </div>
+          
           <div className="grid lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
-            {stories.map((story, index) => (
-              <Card
+            {[
+              {
+                title: "Спасение Мурзика",
+                description: "Тяжелое отравление превратилось в полное выздоровление за 5 дней",
+                image: "/img/d406ab69-2638-499a-992c-46baccefa37f.jpg",
+                duration: "5 дней лечения"
+              },
+              {
+                title: "Операция Рекса", 
+                description: "Сложный перелом лапы - успешная операция и полная реабилитация",
+                image: "/img/f8094e65-4045-4516-a760-5941a040ed18.jpg",
+                duration: "2 недели восстановления"
+              },
+              {
+                title: "Лечение кролика Пушка",
+                description: "Проблемы с пищеварением решены комплексной терапией",
+                image: "/img/11d9e6f2-055a-493f-8cdb-edfa46aee1d9.jpg", 
+                duration: "10 дней лечения"
+              }
+            ].map((story, index) => (
+              <Card 
                 key={index}
-                className="transition-all duration-700 hover:shadow-xl hover:-translate-y-2 overflow-hidden"
+                id={`success-${index}`}
+                data-animate
+                className={`transition-all duration-700 delay-${index * 200} hover:shadow-xl hover:-translate-y-2 overflow-hidden ${getAnimationClass(`success-${index}`, 'animate-scale-in')}`}
               >
                 <div className="relative h-48 overflow-hidden">
-                  <img
-                    src={story.image}
+                  <img 
+                    src={story.image} 
                     alt={story.title}
                     className="w-full h-full object-cover hover:scale-110 transition-transform duration-500"
                   />
@@ -548,6 +555,13 @@ export default function Index() {
               </Card>
             ))}
           </div>
+          
+          <div className="text-center mt-12">
+            <div className="inline-flex items-center bg-green-100 rounded-full px-6 py-3 mb-4">
+              <Icon name="TrendingUp" size={20} className="text-green-600 mr-2" />
+              <span className="text-green-700 font-semibold">95% успешных случаев</span>
+            </div>
+          </div>
         </div>
       </section>
 
@@ -559,49 +573,62 @@ export default function Index() {
             data-animate 
             className={`transition-all duration-700 ${getAnimationClass('reviews-title', 'animate-fade-in-up')}`}
           >
-            <h3 className="text-3xl font-montserrat font-bold text-center text-secondary mb-12">
-              Отзывы клиентов
+            <h3 className="text-3xl font-montserrat font-bold text-center text-secondary mb-4">
+              Отзывы наших клиентов
             </h3>
+            <p className="text-center text-gray-600 font-open-sans mb-12 max-w-2xl mx-auto">
+              Более 2000 счастливых питомцев и их владельцев доверяют нам здоровье своих любимцев
+            </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {reviews.map((review, index) => (
               <Card 
-                key={index}
-                className="bg-white transition-all duration-700 hover:shadow-lg hover:scale-105"
+                key={index} 
+                id={`review-${index}`}
+                data-animate
+                className={`bg-white transition-all duration-700 delay-${index * 200} hover:shadow-lg hover:scale-105 ${getAnimationClass(`review-${index}`, 'animate-fade-in-up')}`}
               >
                 <CardContent className="p-6">
-                  <img
-                    src={review.photo}
-                    alt={`${review.name} с питомцем`}
-                    className="w-full h-48 object-cover rounded-lg mb-4"
-                  />
-                  <div className="flex items-center justify-between mb-3">
+                  <div className="flex items-center mb-4">
                     <div className="flex space-x-1">
                       {[...Array(review.rating)].map((_, i) => (
                         <Icon key={i} name="Star" size={16} className="text-yellow-400 fill-current" />
                       ))}
                     </div>
-                    <span className="text-sm text-gray-500">{review.date}</span>
+                    <span className="ml-2 text-sm text-gray-500">{review.date}</span>
                   </div>
                   <p className="text-gray-700 mb-4 font-open-sans">"{review.text}"</p>
-                  <div className="flex items-center">
-                    <div className="w-10 h-10 bg-primary rounded-full flex items-center justify-center text-white font-bold text-sm mr-3">
-                      {review.name.split(' ').map((n: string) => n[0]).join('')}
-                    </div>
-                    <div>
-                      <div className="font-semibold text-secondary">{review.name}</div>
-                      <div className="text-xs text-gray-500">Владелец: {review.petName}</div>
-                    </div>
-                  </div>
+                  <div className="font-semibold text-secondary">{review.name}</div>
                 </CardContent>
               </Card>
             ))}
+          </div>
+          
+          <div className="text-center mt-12">
+            <div className="inline-flex items-center bg-primary/10 rounded-full px-6 py-3 mb-6">
+              <Icon name="Users" size={20} className="text-primary mr-2" />
+              <span className="text-primary font-semibold">Более 2000 довольных клиентов</span>
+            </div>
+            <div className="flex justify-center space-x-8 text-center">
+              <div>
+                <div className="text-2xl font-montserrat font-bold text-primary">4.9</div>
+                <div className="text-sm text-gray-600">Рейтинг</div>
+              </div>
+              <div>
+                <div className="text-2xl font-montserrat font-bold text-primary">500+</div>
+                <div className="text-sm text-gray-600">Отзывов</div>
+              </div>
+              <div>
+                <div className="text-2xl font-montserrat font-bold text-primary">24/7</div>
+                <div className="text-sm text-gray-600">Поддержка</div>
+              </div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* FAQ */}
-      <section className="py-16 bg-white">
+      <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div 
             id="faq-title" 
@@ -694,8 +721,77 @@ export default function Index() {
               Вызов
             </Button>
           </DialogTrigger>
+          <DialogContent>
+            <DialogHeader>
+              <DialogTitle>Вызов ветеринара на дом</DialogTitle>
+            </DialogHeader>
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <Input 
+                placeholder="Ваше имя" 
+                value={formData.name} 
+                onChange={(e) => setFormData({...formData, name: e.target.value})}
+                required 
+              />
+              <Input 
+                placeholder="Номер телефона" 
+                value={formData.phone} 
+                onChange={(e) => setFormData({...formData, phone: e.target.value})}
+                required 
+              />
+              <Input 
+                placeholder="Адрес" 
+                value={formData.address} 
+                onChange={(e) => setFormData({...formData, address: e.target.value})}
+                required 
+              />
+              <Textarea 
+                placeholder="Опишите состояние питомца"
+                value={formData.description}
+                onChange={(e) => setFormData({...formData, description: e.target.value})}
+              />
+              <Button type="submit" className="w-full">Вызвать врача</Button>
+            </form>
+          </DialogContent>
         </Dialog>
       </div>
+
+      {/* Exit Intent Popup */}
+      <Dialog open={isExitPopupOpen} onOpenChange={setIsExitPopupOpen}>
+        <DialogContent className="max-w-md">
+          <DialogHeader>
+            <DialogTitle className="text-center">Не уходите! 🎉</DialogTitle>
+          </DialogHeader>
+          <div className="text-center space-y-4">
+            <div className="text-4xl">🐾</div>
+            <h3 className="text-xl font-bold text-primary">Специальное предложение!</h3>
+            <p className="text-gray-600">Первый осмотр на дому со скидкой <span className="text-2xl font-bold text-red-500">30%</span></p>
+            <div className="bg-yellow-50 p-4 rounded-lg border-l-4 border-yellow-400">
+              <p className="text-sm text-gray-700">
+                <strong>Только сегодня:</strong> Комплексный осмотр + консультация всего за 1400₽ вместо 2000₽
+              </p>
+            </div>
+            <div className="space-y-2">
+              <Button 
+                className="w-full" 
+                onClick={() => {
+                  setIsExitPopupOpen(false);
+                  setIsDialogOpen(true);
+                }}
+              >
+                <Icon name="Phone" size={16} className="mr-2" />
+                Получить скидку
+              </Button>
+              <Button 
+                variant="outline" 
+                className="w-full" 
+                onClick={() => setIsExitPopupOpen(false)}
+              >
+                Может быть, позже
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

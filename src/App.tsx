@@ -14,7 +14,6 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
-      <div style={{background: 'blue', padding: 10, color: 'white', fontSize: 20}}>ТЕСТ КАРТИНКИ v2: <img src="https://cdn.poehali.dev/projects/6f7a6d9d-7dd8-41dc-b2a7-0ea3db209268/files/5453cf96-ce98-4df1-a394-c28840060b4d.jpg" style={{width: 100, height: 100}} alt="test" /></div>
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
