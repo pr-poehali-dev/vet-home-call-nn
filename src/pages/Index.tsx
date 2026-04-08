@@ -35,7 +35,7 @@ export default function Index() {
           }
         });
       },
-      { threshold: 0.1 }
+      { threshold: 0.05, rootMargin: '50px' }
     );
 
     const elements = document.querySelectorAll('[data-animate]');
@@ -477,10 +477,8 @@ export default function Index() {
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {doctors.map((doctor, index) => (
               <Card 
-                key={index} 
-                id={`doctor-${index}`}
-                data-animate
-                className={`bg-white transition-all duration-700 delay-${index * 150} hover:shadow-xl hover:-translate-y-2 ${getAnimationClass(`doctor-${index}`, 'animate-scale-in')}`}
+                key={index}
+                className="bg-white transition-all duration-700 hover:shadow-xl hover:-translate-y-2"
               >
                 <div className="relative overflow-hidden h-64">
                   <img 
@@ -524,9 +522,7 @@ export default function Index() {
             {stories.map((story, index) => (
               <Card
                 key={index}
-                id={`success-${index}`}
-                data-animate
-                className={`transition-all duration-700 delay-${index * 200} hover:shadow-xl hover:-translate-y-2 overflow-hidden ${getAnimationClass(`success-${index}`, 'animate-scale-in')}`}
+                className="transition-all duration-700 hover:shadow-xl hover:-translate-y-2 overflow-hidden"
               >
                 <div className="relative h-48 overflow-hidden">
                   <img
@@ -570,10 +566,8 @@ export default function Index() {
           <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
             {reviews.map((review, index) => (
               <Card 
-                key={index} 
-                id={`review-${index}`}
-                data-animate
-                className={`bg-white transition-all duration-700 delay-${index * 200} hover:shadow-lg hover:scale-105 ${getAnimationClass(`review-${index}`, 'animate-fade-in-up')}`}
+                key={index}
+                className="bg-white transition-all duration-700 hover:shadow-lg hover:scale-105"
               >
                 <CardContent className="p-6">
                   <img
